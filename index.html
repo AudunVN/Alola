@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>placeholder</title>
+		<meta name="google-site-verification" content="oiR6BUxCQAa51JiKYDBz8jQ7E1ECNq6pecuawBnLuGM">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="description" content="placeholder">
+		<meta name="keywords" content="placeholder placeholders">
+		<style>
+			/* css reset begins */
+			html, body, div, span, applet, object, iframe,
+			h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+			a, abbr, acronym, address, big, cite, code,
+			del, dfn, em, img, ins, kbd, q, s, samp,
+			small, strike, strong, sub, sup, tt, var,
+			b, u, i, center,
+			dl, dt, dd, ol, ul, li,
+			fieldset, form, label, legend,
+			table, caption, tbody, tfoot, thead, tr, th, td,
+			article, aside, canvas, details, embed, 
+			figure, figcaption, footer, header, hgroup, 
+			menu, nav, output, ruby, section, summary,
+			time, mark, audio, video {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				font-size: 100%;
+				font: inherit;
+				vertical-align: baseline;
+			}
+			/* HTML5 display-role reset for older browsers */
+			article, aside, details, figcaption, figure, 
+			footer, header, hgroup, menu, nav, section {
+				display: block;
+			}
+			body {
+				line-height: 1;
+			}
+			ol, ul {
+				list-style: none;
+			}
+			blockquote, q {
+				quotes: none;
+			}
+			blockquote:before, blockquote:after,
+			q:before, q:after {
+				content: '';
+				content: none;
+			}
+			table {
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+			/* css reset ends */
+			
+			.backgroundContainer {
+				width: 100%;
+				height: 100%;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background: white;
+				z-index: -10;
+				position: absolute;
+			}
+			
+			.mapContainer {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				margin: 0;
+			}
+			
+			.controls {
+				position: absolute;
+				top: 0;
+				z-index: 10;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="backgroundContainer">
+		
+		</div>
+		<div class="contentContainer">
+			<div class="mapContainer panzoom">
+				<img src="Alola_10000px.jpg">
+				<nav class="controls">
+					<ul>
+						<li class="zoom-in">+</li>
+						<li class="zoom-out">-</li>
+						<li class="reset">R</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- (slow) includes begin -->
+		<link href="https://fonts.googleapis.com/css?family=Bauhaus" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+		<script src="jquery.panzoom.min.js"></script>
+		<script>
+			$( document ).ready(function() {
+				var initScale = document.querySelector(".panzoom").offsetWidth/document.querySelector(".panzoom img").clientWidth;
+				console.log("matrix("+initScale+", 0, 0, "+initScale+", -4349.5, -3050)");
+				console.log(initScale);
+				$(".panzoom img").panzoom({
+					contain: 'invert',
+					disablePan: false,
+					disableZoom: false,
+					startTransform: "matrix("+initScale+", 0, 0, "+initScale+", -4349.5, -3050)",
+					minScale: initScale,
+					$reset: $(".reset"),
+					$zoomIn: $(".zoom-in"),
+					$zoomOut: $(".zoom-out")
+				});
+				$(".panzoom").on('mousewheel.focal', function( e ) {
+					e.preventDefault();
+					var delta = e.delta || e.originalEvent.wheelDelta;
+					var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+					$(".panzoom img").panzoom('zoom', zoomOut, {
+						increment: 0.1,
+						animate: false,
+						focal: e
+					});
+				});
+				$(".panzoom img").panzoom('resetDimensions');
+			});
+		</script>
+		<!-- (slow) includes end -->
+	</body>
+</html>
